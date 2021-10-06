@@ -1,0 +1,23 @@
+#immobilie-icon::after {
+  content: "Immobilie";
+}
+
+#kreditnehmende-icon::after {
+  content: "Kreditnehmende";
+}
+
+#finanzierung-icon::after {
+  content: "Finanzierung";
+}
+
+#dokumente-icon::after {
+  content: "Dokumente";
+}
+
+#unterschrift-icon::after {
+  content: "Unterschrift";
+}
+
+#ziel-icon::after {
+  content: "Ziel";
+}
