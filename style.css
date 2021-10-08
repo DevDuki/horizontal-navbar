@@ -7,16 +7,21 @@
 }
 
 /* Reset styles */
-html, body {
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
+
 
 /* Material Icons */
-.material-icons.md-30 {
-  font-size: 30px;
+.material-icons.md-25 {
+  font-size: 25px;
 }
 
 .material-icons.md-inactive {
@@ -60,32 +65,46 @@ nav::before {
 
   cursor: pointer;
 
-  transition: all 0.9s ease-in-out;
+  /* transition: all 0.9s ease-in-out; */
 }
 
 .dot.main .icon {
   position: relative;
 
   margin-top: -30px;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.dot.main:hover .icon {
+  transform: scale(1.2);
 }
 
 .dot.main .icon::after {
-  display: none;
 
   color: var(--background-inactive);
 
   font-size: 1rem;
 
   position: absolute;
-  bottom: 15%;
+  bottom: 9px;
+  margin-left: 5px;
+
+  animation: slideOut 0.9s ease-in-out forwards;
 }
 
 .nav-item-container:last-child .dot.main .icon::after {
   right: 100%;
 }
 
+.nav-item-container.active .dot.main .icon {
+  transform: scale(1.2);
+}
+
 .nav-item-container.active .dot.main .icon::after {
   display: inline;
+
+  animation: slideIn 0.9s ease-in-out forwards;
 }
 
 .dot.secondary {
@@ -94,22 +113,11 @@ nav::before {
 }
 
 .subnav {
-  /* flex: 1; */
-  align-items: flex-start;
-  /* transform: translateY(calc(50% - 5px)); */
-  position: relative;
-
-  /* !display none überschreibt keyframes' display */
   display: flex;
 
-  animation: slideOut 0.9s ease-in-out forwards;
+  white-space: nowrap;
 
-  justify-content: space-between;
-}
-
-.nav-item-container.active .subnav {
-  display: flex;
-  animation: slideIn 0.9s ease-in-out forwards;
+  transform: translateY(calc(50% - 5px));
 }
 
 .subnav-label-container {
@@ -127,72 +135,86 @@ nav::before {
   position: relative;
 
   margin-top: 5px;
-  /* padding-right: 20px; */
-  /* margin-top: 20px; */
 }
-
-/* .subnav-label::before {
-  content: '';
-
-  background-color: var(--background-inactive);
-
-  min-width: 10px;
-  height: 10px;
-
-  border-radius: 50%;
-
-  position: absolute;
-  left: calc(50% - 20px);
-  top: -17px;
-} */
 
 .subnav-label:last-child::before {
   left: 50%;
 }
 
 .nav-item-container {
-  min-height: 60px;
+  max-height: 60px;
 
   display: flex;
   align-items: center;
   flex: 0.5;
-  /* justify-content: space-between; */
 
   position: relative;
 
   transition: all 0.9s ease-in-out;
 }
 
-.nav-item-container:last-child::after {
-  min-width: 0;
+
+@keyframes setActive {
+  from {
+    max-width: 5%;
+  }
+  to {
+    min-width: 70%;
+  }
 }
 
-.nav-item-container::before {
-  /* content: '';
-  position: absolute;
-  top: 50%;
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%) translateY(calc(50% - 5px)) scaleX(0);
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    opacity: 0;
+  }
 
-  border-top: 1px solid var(--background-inactive);
-  width: 100%;
-  transform: translateY(-50%); */
+  1% {
+    transform: translateX(-100%) translateY(calc(50% - 5px)) scaleX(1);
+  }
+
+  99% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0%) translateY(calc(50% - 5px)) scaleX(1);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
 }
 
-.nav-item-container:last-child {
-  flex: 0;
+@keyframes slideOut {
+  0% {
+    transform: translateX(0%) translateY(calc(50% - 5px)) scaleX(1);
+    /* display: flex; */
+    min-width: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+  }
+
+  98% {
+    opacity: 0;
+  }
+
+  99% {
+    transform: translateX(-99%) translateY(calc(50% - 5px)) scaleX(1);
+    min-width: 100%;
+    /* display: flex; */
+  }
+
+  100% {
+    transform: translateX(-100%) translateY(calc(50% - 5px)) scaleX(0);
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    /* min-width: 0%; */
+    /* display: none; */
+    opacity: 0;
+  }
 }
-
-.nav-item-container.active {
-
-  flex: 1;
-  /* min-width: 650px;
-  min-width: 80%; */
-}
-
-
 
 
 .slide-in {
-  animation: slideIn 0.9s ease-in-out forwards;
+  animation: slideIn 0.9s ease-in-out backwards;
 }
 
 .slide-out {
@@ -203,10 +225,12 @@ nav::before {
   animation: slidingAdjust 0.9s ease-in-out forwards;
 }
 
+/*
 @keyframes slideIn {
   0% {
     transform: translate(100%, calc(50% - 5px));
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    display: none;
   }
 
   1% {
@@ -222,7 +246,7 @@ nav::before {
 
 @keyframes slideOut {
   0% {
-    transform: translate(0px, calc(50% - 5px));
+    transform: translateX(0px);
     display: flex;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
@@ -232,8 +256,9 @@ nav::before {
   }
 
   100% {
-    transform: translate(100%, calc(50% - 5px));
+    transform: translateX(100%);
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    display: none;
   }
 }
 
@@ -244,4 +269,4 @@ nav::before {
   100% {
     flex: 1;
   }
-}
+} */
