@@ -138,15 +138,35 @@ nav::before {
   height: 10px;
 }
 
+.indicator {
+  background-color: var(--background-active);
+
+  height: 3px;
+  width: 0;
+
+  position: absolute;
+  top: calc(50% - 1px);
+
+
+  opacity: 1;
+
+  transition: all 0.9s ease-in-out;
+}
+
 .subnav {
   display: flex;
   justify-content: space-around;
 
   min-width: 100%;
+  min-height: 29px;
 
   white-space: nowrap;
 
-  transform: translateY(calc(50% - 5px));
+  animation: slideOut 0.9s ease-in-out forwards;
+}
+
+.nav-item-container.active .subnav {
+  animation: slideIn 0.9s ease-in-out forwards;
 }
 
 .subnav-label-container {
@@ -163,10 +183,7 @@ nav::before {
 .subnav-label {
   position: relative;
 
-  padding-top: 5px;
-  border-top: 3px solid var(--background-active);
-
-  transform: translateY(3px);
+  padding-top: 8px;
 
   cursor: pointer;
 }
@@ -208,13 +225,13 @@ nav::before {
 
 @keyframes slideIn {
   0% {
-    transform: translateX(-100%) translateY(calc(50% - 5px)) scaleX(0);
+    transform: translateX(-100%) translateY(calc(50% - 0.5px)) scaleX(0);
     clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
     opacity: 0;
   }
 
   1% {
-    transform: translateX(-100%) translateY(calc(50% - 5px)) scaleX(1);
+    transform: translateX(-100%) translateY(calc(50% - 0.5px)) scaleX(1);
   }
 
   99% {
@@ -222,14 +239,14 @@ nav::before {
   }
 
   100% {
-    transform: translateX(0%) translateY(calc(50% - 5px)) scaleX(1);
+    transform: translateX(0%) translateY(calc(50% - 0.5px)) scaleX(1);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
 
 @keyframes slideOut {
   0% {
-    transform: translateX(0%) translateY(calc(50% - 5px)) scaleX(1);
+    transform: translateX(0%) translateY(calc(50% - 0.5px)) scaleX(1);
     /* display: flex; */
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     opacity: 1;
@@ -240,13 +257,13 @@ nav::before {
   }
 
   99% {
-    transform: translateX(-99%) translateY(calc(50% - 5px)) scaleX(1);
+    transform: translateX(-99%) translateY(calc(50% - 0.5px)) scaleX(1);
     min-width: 100%;
     /* display: flex; */
   }
 
   100% {
-    transform: translateX(-100%) translateY(calc(50% - 5px)) scaleX(0);
+    transform: translateX(-100%) translateY(calc(50% - 0.5px)) scaleX(0);
     clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
     /* min-width: 0%; */
     /* display: none; */
