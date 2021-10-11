@@ -4,6 +4,7 @@
 /* Variables */
 :root {
   --background-inactive: #7F7F7F;
+  --background-active: #f91f39;
 }
 
 /* Reset styles */
@@ -11,6 +12,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+
+  font-family: 'Futura Book', 'Helvetica Neue';
 }
 
 html {
@@ -31,7 +34,8 @@ html {
 
 
 nav {
-  margin: 0 80px;
+  max-width: 1000px;
+  margin: 0 auto;
   margin-top: 60px;
   display: flex;
   justify-content: space-between;
@@ -65,7 +69,11 @@ nav::before {
 
   cursor: pointer;
 
-  /* transition: all 0.9s ease-in-out; */
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dot.main:hover {
+  background-color: var(--background-active);
 }
 
 .dot.main .icon {
@@ -73,11 +81,16 @@ nav::before {
 
   margin-top: -30px;
 
+  color: var(--background-inactive);
+
   transition: all 0.2s ease-in-out;
 }
 
 .dot.main:hover .icon {
-  transform: scale(1.2);
+  transform: scale(1.15);
+  margin-top: -32px;
+
+  color: var(--background-active);
 }
 
 .dot.main .icon::after {
@@ -87,10 +100,14 @@ nav::before {
   font-size: 1rem;
 
   position: absolute;
-  bottom: 9px;
+  bottom: 7px;
   margin-left: 5px;
 
   animation: slideOut 0.9s ease-in-out forwards;
+}
+
+.nav-item-container.active .dot.main {
+  background-color: var(--background-active);
 }
 
 .nav-item-container:last-child .dot.main .icon::after {
@@ -98,12 +115,21 @@ nav::before {
 }
 
 .nav-item-container.active .dot.main .icon {
-  transform: scale(1.2);
+  transform: scale(1.35);
+  margin-top: -35px;
+
+  color: var(--background-active);
 }
 
 .nav-item-container.active .dot.main .icon::after {
-  display: inline;
+  /* display: inline; */
 
+  color: var(--background-active);
+
+  animation: slideIn 0.9s ease-in-out forwards;
+}
+
+.nav-item-container:last-child.active .dot.main .icon::after {
   animation: slideIn 0.9s ease-in-out forwards;
 }
 
@@ -114,6 +140,9 @@ nav::before {
 
 .subnav {
   display: flex;
+  justify-content: space-around;
+
+  min-width: 100%;
 
   white-space: nowrap;
 
@@ -134,7 +163,12 @@ nav::before {
 .subnav-label {
   position: relative;
 
-  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 3px solid var(--background-active);
+
+  transform: translateY(3px);
+
+  cursor: pointer;
 }
 
 .subnav-label:last-child::before {
@@ -143,14 +177,23 @@ nav::before {
 
 .nav-item-container {
   max-height: 60px;
+  width: 1%;
 
   display: flex;
   align-items: center;
-  flex: 0.5;
 
   position: relative;
 
   transition: all 0.9s ease-in-out;
+}
+
+.nav-item-container:last-child {
+  max-width: 0%;
+
+}
+
+.nav-item-container.active {
+  width: 80%;
 }
 
 
@@ -188,7 +231,6 @@ nav::before {
   0% {
     transform: translateX(0%) translateY(calc(50% - 5px)) scaleX(1);
     /* display: flex; */
-    min-width: 100%;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     opacity: 1;
   }
