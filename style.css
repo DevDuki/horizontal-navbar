@@ -3,7 +3,7 @@
 
 /* Variables */
 :root {
-  --background-inactive: #7F7F7F;
+  --background-inactive: #7f7f7f;
   --background-active: #f91f39;
 }
 
@@ -16,9 +16,6 @@
   font-family: 'Futura Book', 'Helvetica Neue';
 }
 
-html {
-  overflow-x: hidden;
-}
 
 
 
@@ -33,6 +30,7 @@ html {
 
 
 
+
 nav {
   max-width: 1000px;
   margin: 0 auto;
@@ -43,7 +41,6 @@ nav {
 }
 
 nav::before {
-
   content: '';
   position: absolute;
   top: 50%;
@@ -145,10 +142,8 @@ nav::before {
   width: 0;
 
   position: absolute;
-  top: calc(50% - 1px);
-
-
-  opacity: 1;
+  top: 0px;
+  left: -15px;
 
   transition: all 0.9s ease-in-out;
 }
@@ -206,21 +201,10 @@ nav::before {
 
 .nav-item-container:last-child {
   max-width: 0%;
-
 }
 
 .nav-item-container.active {
   width: 80%;
-}
-
-
-@keyframes setActive {
-  from {
-    max-width: 5%;
-  }
-  to {
-    min-width: 70%;
-  }
 }
 
 @keyframes slideIn {

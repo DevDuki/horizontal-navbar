@@ -17,12 +17,13 @@ navIcons.forEach(navIcon => {
       if(currentActive) {
 
         const ctxt = item.id.slice(0, item.id.lastIndexOf('-')) // Removes all characters after and including "-". Example: immobilie-container => immobilie
-        const indicator = item.querySelector(`#${ctxt}-indicator`)
+        const indicator = item.querySelector('.indicator')
         const currentActiveSubnav = item.querySelector('.subnav-label.active')
-        console.log('indicator', indicator)
-        console.log('currentActiveSubnav', currentActiveSubnav)
-        // slideOutIndicator(indicator)
-        indicator.style.width = '0'
+
+        if(indicator) {
+          indicator.style.width = '0'
+          indicator.style.left = '15px'
+        }
 
 
 
@@ -48,7 +49,7 @@ navIcons.forEach(navIcon => {
         firstSubnavItem.classList.add('active')
 
         const ctxt = item.id.slice(0, item.id.lastIndexOf('-')) // Removes all characters after and including "-". Example: immobilie-container => immobilie
-        const indicator = item.querySelector(`#${ctxt}-indicator`)
+        const indicator = item.querySelector('.indicator')
 
         setTimeout(() => {
           positionIndicator(firstSubnavItem, indicator)
@@ -63,15 +64,17 @@ navIcons.forEach(navIcon => {
 // Functionality for the subnav points (top bars)
 const subnavLabels = document.querySelectorAll('.subnav-label')
 
-navItems.forEach(navItem => {
+const indicators = document.querySelectorAll('.indicator')
 
-  const indicator = document.createElement('span')
-  indicator.classList.add('indicator')
-  const ctxt = navItem.id.slice(0, navItem.id.lastIndexOf('-')) // Removes all characters after and including "-". Example: immobilie-container => immobilie
-  indicator.id = `${ctxt}-indicator`
+// navItems.forEach(navItem => {
 
-  navItem.append(indicator)
-})
+//   const indicator = document.createElement('span')
+//   indicator.classList.add('indicator')
+//   const ctxt = navItem.id.slice(0, navItem.id.lastIndexOf('-')) // Removes all characters after and including "-". Example: immobilie-container => immobilie
+//   indicator.id = `${ctxt}-indicator`
+
+//   navItem.append(indicator)
+// })
 
 subnavLabels.forEach(subnavLabel => {
 
@@ -83,7 +86,7 @@ subnavLabels.forEach(subnavLabel => {
     const newActiveSubnav = e.currentTarget
     newActiveSubnav.classList.add('active')
 
-    const indicator = newActiveSubnav.parentElement.nextElementSibling
+    const indicator = newActiveSubnav.parentNode.lastElementChild
 
     positionIndicator(newActiveSubnav, indicator)
   })
@@ -97,18 +100,24 @@ const positionIndicator = (element, indicator) => {
   const elementBoundingRect = element.getBoundingClientRect()
 
 
-  const left = elementBoundingRect.left + window.scrollX - navItemContainer.getBoundingClientRect().left + 'px'
-
+  const left = elementBoundingRect.left + window.scrollX - navItemContainer.getBoundingClientRect().left - 15 + 'px'
   const width = element.clientWidth + 'px'
+
   indicator.style.left = left
   indicator.style.width = width
 }
 
 const slideOutIndicator = (indicator) => {
+  indicator.classList.remove('slide-in')
   indicator.classList.add('slide-out')
 }
 
-// At initial page reload, set the Indicator to first subnav
+const slideInIndicator = indicator => {
+  indicator.classList.remove('slide-out')
+  indicator.classList.add('slide-in')
+}
+
+// At initial page laod, set the Indicator to first subnav
 const initIndicator = () => {
   const firstSubnav = document.querySelector('#immobilie-container .subnav-label.active')
   const clickEvent = new Event('click')
