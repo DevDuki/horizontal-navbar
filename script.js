@@ -22,7 +22,7 @@ navIcons.forEach(navIcon => {
 
         if(indicator) {
           indicator.style.width = '0'
-          indicator.style.left = '15px'
+          indicator.style.left = '-15px'
         }
 
 
@@ -125,3 +125,25 @@ const initIndicator = () => {
 }
 
 setTimeout(initIndicator, 900)
+
+
+// Recalculate the indicator's position, when window gets resized
+let timerId
+const debounceIndicatorRecalculation = (fn, delay) => {
+  clearTimeout(timerId)
+
+  timerId = setTimeout(fn, delay)
+}
+
+const recalculateIndicatorPosition = () => {
+  const curActiveSubnav = document.querySelector('.nav-item-container.active .subnav')
+
+  const indicator = curActiveSubnav.querySelector('.indicator')
+  const curActiveSubnavLabel = curActiveSubnav.querySelector('.subnav-label.active')
+
+  positionIndicator(curActiveSubnavLabel, indicator)
+}
+
+window.addEventListener('resize', () => {
+  debounceIndicatorRecalculation(recalculateIndicatorPosition, 200)
+})
